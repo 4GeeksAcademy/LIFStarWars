@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -12,7 +13,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			characters: [], // Lista de personajes
+			vehicles: [], // Lista de vehiculos
+			planets: [], // Lista de planetas
+			
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,9 +43,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			//Get People 
+			getPeople: () => {
+				fetch("https://www.swapi.tech/api/people")
+				.then(response =>{
+					if(!response.ok){
+						console.error(`Error ${response.status}:La solicitud no fue exitos.`);
+					throw new Error (`HTTP error! status: ${response.status}` );
+				}
+					return response.json ();
+			})
+				
+				.then(data => {
+					console.log("Datos obtenidos:", data.results);
+					setStore({ characters: data.results});
+				})
+				.catch(error => {
+					console.error (" Hubo un error al obtnere los contactos:", error);
+				});
+			},
+			//Get Vehicles 
+			getVehicles: () => {
+				fetch("https://www.swapi.tech/api/vehicles")
+				.then(response =>{
+					if(!response.ok){
+					throw new Error (`HTTP error! status: ${response.status}` );
+				}
+					return response.json ();
+			})
+				
+				.then(data => {
+					console.log("Datos obtenidos:", data.results);
+					setStore({ vehicles: data.results});
+				})
+				.catch(error => {
+					console.error (" Hubo un error al obtnere los contactos:", error);
+				});
+			},
+            //Get Planets
+			getPlanets: () => {
+				fetch("https://www.swapi.tech/api/planets")
+				.then(response =>{
+					if(!response.ok){
+					throw new Error (`HTTP error! status: ${response.status}` );
+				}
+					return response.json ();
+			})
+				
+				.then(data => {
+					console.log("Datos obtenidos:", data.results);
+					setStore({ planets: data.results});
+				})
+				.catch(error => {
+					console.error (" Hubo un error al obtnere los contactos:", error);
+				});
+			},
 		}
 	};
+		
 };
 
 export default getState;
