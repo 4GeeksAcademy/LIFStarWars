@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 const Details = () => {
   const { type, uid } = useParams();
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   const [details, setDetails] = useState(null);
@@ -37,7 +37,7 @@ const Details = () => {
         <div className="row g-0">
           <div className="col-md-4">
             <img
-              src={`https://starwars-visualguide.com/assets/img/${type}/${uid}.jpg`} className="img-fluid rounded-start" alt="..." />
+              src={`https://starwars-visualguide.com/assets/img/${type == "people" ? "characters" : type}/${uid}.jpg`} className="img-fluid rounded-start" alt="..." />
           </div>
           <div className="col-md-8">
             <div className="card-body">

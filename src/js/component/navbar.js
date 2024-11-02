@@ -1,26 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context);
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
+		<nav className="navbar navbar-light bg-light m-3">
 			<Link to="/">
 				<div className="container-fluid">
 					<span className="navbar-brand mb-0">
-						<img src="https://pngimg.com/uploads/star_wars_logo/star_wars_logo_PNG39.png" alt="Logo" style={{ height: "40px" }} />
+						<img src="https://pngimg.com/uploads/star_wars_logo/star_wars_logo_PNG39.png" alt="Logo" style={{ height: "50px" }} />
 					</span>
 				</div>
 			</Link>
+
 			<div className="ml-auto">
 				<div className="dropdown">
-					<Link to="/demo" className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-						Options
-					</Link>
+					<button className="btn btn-primary dropdown-toggle"
+						type="button"
+						id="dropdownMenuButton"
+						data-bs-toggle="dropdown"
+						aria-expanded="false">
+
+						Favorites ({store.favorites.length})
+					</button>
+
 					<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<li><Link className="dropdown-item" to="/action">Action</Link></li>
-						<li><Link className="dropdown-item" to="/another-action" >Another action</Link></li>
-						<li><Link className="dropdown-item" to="/something-else">Something else here</Link></li>
+						{store.favorites.length > 0 ? (
+							store.favorites.map((fav, index) => (
+
+								<li key={index}>
+									<span className="dropdown-item d-flex justify-content-between align-items-center">
+										<span className="text-truncate" style={{ maxWidth: "150px" }} >{fav.name}</span>
+										<i className="fa-solid fa-trash ms-4" style={{ cursor: "pointer", color: "red" }}
+											onClick={() => actions.removeFavByUid(fav.uid)}></i>
+									</span>
+								</li>
+							))
+						) : (
+							<li>
+								<span className="dropdown-items">No favorites added</span>
+							</li>
+						)}
+
 					</ul>
 				</div>
 			</div>

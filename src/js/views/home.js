@@ -8,12 +8,7 @@ import Vehicles from "../component/Vehicles";
 export const Home = () => {
 	const{ actions } = useContext(Context);
 
-	useEffect(() => {
-		actions.getPeople();
-		actions.getVehicles();
-		actions.getPlanets();
-		
-	 }, []);
+	
 	return (
 	<div className="text-center mt-5 bg-dark" style={{ overflowY: "auto", height: "80vh" }}>
 		<People/>
