@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+
 			characters: [], // Lista de personajes
 			vehicles: [], // Lista de vehiculos
 			planets: [], // Lista de planetas
@@ -23,21 +24,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// LLamar a Store, hacer copia de los favoritos y pasarle mis favoritos
-			addFav: (fav) => {
+			addFav: (item) => {
 				const store = getStore();
-				if(!store.favorites.some(f=> f.uid === fav.uid)){
-					setStore({
-						favorites:[...store.favorites, fav]
-					});
+				const newFav = { ...item, type: item.type || (item.name ? "character" : "planet") };
+				if (!store.favorites.some(fav => fav.uid === item.uid && fav.type === newFav.type)) {
+					setStore({ favorites: [...store.favorites, newFav] });
+
 				}
+
 			},
-			removeFavByUid: (uid) => {
+			removeFavByUid: (uid, type) => {
 				const store = getStore();
-					const updatedFavorites = store.favorites.filter(fav => fav.uid !== uid);
-					setStore({favorites: updatedFavorites });
-					
-		    },
-						
+				const updateFavorites = store.favorites.filter(fav => !(fav.uid === uid && fav.type === type));
+				setStore({ favorites: updateFavorites });
+			},
+
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

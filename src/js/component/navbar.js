@@ -34,7 +34,7 @@ export const Navbar = () => {
 									<span className="dropdown-item d-flex justify-content-between align-items-center">
 										<span className="text-truncate" style={{ maxWidth: "150px" }} >{fav.name}</span>
 										<i className="fa-solid fa-trash ms-4" style={{ cursor: "pointer", color: "red" }}
-											onClick={() => actions.removeFavByUid(fav.uid)}></i>
+											onClick={() => actions.removeFavByUid(fav.uid, fav.type)}></i>
 									</span>
 								</li>
 							))

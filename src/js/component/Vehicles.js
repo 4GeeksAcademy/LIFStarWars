@@ -17,7 +17,7 @@ const Vehicles = () => {
         style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
         {store.vehicles && store.vehicles.length > 0 ? (
           store.vehicles.map((vehicle) => {
-            const isFavorite = store.favorites.some(fav => fav.uid === vehicle.uid);
+            const isFavorite = store.favorites.some(fav => fav.uid ===vehicle.uid && fav.type === "vehicle");
 
             return (
 
@@ -32,7 +32,7 @@ const Vehicles = () => {
 
                   className="card-img-top"
                   alt={vehicle.name}
-                  style = {{ width:"400px", height: "100%", objectFit: "cover"}} />
+                  style={{ width: "400px", height: "100%", objectFit: "cover" }} />
                 <div className="card-body bg-secondary">
 
                   <h5 className="card-title">{vehicle.name}</h5>
@@ -47,7 +47,7 @@ const Vehicles = () => {
 
                     <i className={`fa-solid fa-shield-heart ${isFavorite ? "text-danger" : ""}`}
                       onClick={() => isFavorite ?
-                        actions.removeFavByUid(vehicle.uid) : actions.addFav(vehicle)}
+                        actions.removeFavByUid(vehicle.uid, "vehicle") : actions.addFav({ ...vehicle, type: "vehicle" })}
                     >
 
                     </i>

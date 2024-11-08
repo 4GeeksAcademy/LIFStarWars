@@ -15,7 +15,7 @@ const People = () => {
       <div className="d-flex" style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
         {store.characters && store.characters.length > 0 ? (
           store.characters.map((character) => {
-            const isFavorite = store.favorites.some(fav => fav.uid === character.uid);
+            const isFavorite = store.favorites.some(fav => fav.uid === character.uid && fav.type === "character");
 
             return (
 
@@ -43,8 +43,9 @@ const People = () => {
                       className="btn btn-outline-primary"
                       onClick={() => navigate(`/details/people/${character.uid}`)}>Learn more!</button>
 
+
                     <i className={`fa-solid fa-shield-heart ${isFavorite ? "text-danger" : ""}`}
-                      onClick={() => isFavorite ? actions.removeFavByUid(character.uid) : actions.addFav(character)}
+                      onClick={() => isFavorite ? actions.removeFavByUid(character.uid, "character") : actions.addFav({...character, type: "character"})}
                     ></i>
 
                   </div>
